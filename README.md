@@ -13,4 +13,3 @@ Its a simple CRUD (create, read, update, delete) system page for managing differ
 - All course data is stored in `localStorage` in your browser, so clearing browser storage will delete all courses
 
 #### Screenshot:
-![1](https://raw.githubusercontent.com/HananMurrar/CRUDCoursesWeb/main/CRUDCourses/result.png)
