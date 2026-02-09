@@ -3,107 +3,112 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Courses</title>
-  <!-- font awesome  -->
-  <link rel="stylesheet" href="assets/css/all.min.css" />
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-  <!-- style  -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>Courses CRUD</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+    }
+
+    th,
+    td {
+      font-weight: normal;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      box-shadow: none;
+      border-color: gainsboro;
+    }
+  </style>
 </head>
 
-<body>
-  <main>
-    <h2 class="text-center text-bg-dark py-2">CRUD System</h2>
+<body class="bg-white">
+  <h2 class="w-full text-center bg-black text-white py-4 px-6 m-0 text-3xl font-bold">CRUD System</h2>
 
-    <div class="container">
-      <div class="row mt-4">
-        <div class="col-md-5 mb-3">
-          <form>
-            <div class="mb-3 position-relative">
-              <label class="form-label text-capitalize">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter course name" />
-              <div class="invalid-feedback">Please add name at least five character</div>
-            </div>
+  <main class="max-w-6xl mx-auto p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <div class="mb-3 position-relative">
-              <label for="" class="form-label text-capitalize">Price</label>
-              <input type="text" class="form-control" id="price" placeholder="Enter course price" />
-              <div class="invalid-feedback">Price must be number</div>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label class="form-label text-capitalize">Capacity</label>
-              <input type="text" class="form-control" id="capacity" placeholder="Enter course capacity" />
-              <div class="invalid-feedback">Capacity must be number</div>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="exampleFormControlTextarea1" class="form-label text-capitalize">Description</label>
-              <textarea class="form-control" id="description" placeholder="Enter course description" rows="3"></textarea>
-              <div class="invalid-feedback">Please add description</div>
-            </div>
-
-            <div class="mb-3 position-relative">
-              <label for="cat" class="form-label">Category</label>
-              <select class="form-select" id="category" aria-label="Default select example">
-                <option selected hidden value="">Select from menu</option>
-                <option value="category1">Category1</option>
-                <option value="category2">Category2</option>
-                <option value="category3">Category3</option>
-              </select>
-              <div class="invalid-feedback">Please select a valid category</div>
-            </div>
-
-            <button type="submit" id="add-btn" class="btn btn-primary">Add</button>
-            <button type="button" id="update-btn" class="btn btn-primary">Update</button>
-          </form>
-        </div>
-
-        <div class="col-md-6 offset-1 mb-3">
-          <label class="form-label text-capitalize">Search By Course Name</label>
-
-          <div class="input-group flex-nowrap">
-            <input type="text" id="keyword" class="form-control" placeholder="Search" />
-            <span class="input-group-text bg-transparent"><i class="fa-solid fa-search"></i></span>
+      <!-- form -->
+      <div>
+        <form id="course-form" class="space-y-4">
+          <div>
+            <label class="block mb-1">Name</label>
+            <input type="text" id="name" placeholder="Enter course name"
+              class="w-full border border-gray-400 rounded px-3 py-2" />
           </div>
 
-          <div class="d-flex justify-content-between my-5">
-            <label class="form-label text-capitalize">Courses Data</label>
-            <button type="button" id="delete-btn" class="btn btn-danger">Delete All</button>
+          <div>
+            <label class="block mb-1">Price</label>
+            <input type="text" id="price" placeholder="Enter course price"
+              class="w-full border border-gray-400 rounded px-3 py-2" />
           </div>
 
-          <table class="table table-striped mt-3">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Capacity</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody id="tbody">
-            </tbody>
-          </table>
+          <div>
+            <label class="block mb-1">Capacity</label>
+            <input type="text" id="capacity" placeholder="Enter course capacity"
+              class="w-full border border-gray-400 rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block mb-1">Description</label>
+            <textarea id="description" rows="3" placeholder="Enter course description"
+              class="w-full border border-gray-400 rounded px-3 py-2"></textarea>
+          </div>
+
+          <div>
+            <label class="block mb-1">Category</label>
+            <select id="category" class="w-full border border-gray-400 rounded px-3 py-2">
+              <option value="" hidden>Select from menu</option>
+              <option value="category1">Category1</option>
+              <option value="category2">Category2</option>
+              <option value="category3">Category3</option>
+            </select>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="submit" id="add-btn" class="bg-blue-600 text-white px-3 py-2 w-full rounded">Add</button>
+            <button type="button" id="update-btn" class="bg-green-600 text-white px-3 py-2 w-full rounded hidden">Update</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- search and table -->
+      <div>
+        <div class="mb-4">
+          <label class="block mb-1">Search Courses</label>
+          <input type="text" id="keyword" placeholder="Search by course name" class="w-full border border-gray-400 rounded px-3 py-2" />
         </div>
+
+        <div class="flex justify-between items-center mb-2">
+          <label>Courses Data</label>
+          <button type="button" id="delete-btn" class="bg-red-600 text-white px-3 py-2 rounded">Delete All</button>
+        </div>
+
+        <table class="w-full border-collapse">
+          <thead class="bg-black text-white">
+            <tr>
+              <th class="border border-gray-400 px-2 py-1">#</th>
+              <th class="border border-gray-400 px-2 py-1">Name</th>
+              <th class="border border-gray-400 px-2 py-1">Price</th>
+              <th class="border border-gray-400 px-2 py-1">Capacity</th>
+              <th class="border border-gray-400 px-2 py-1">Description</th>
+              <th class="border border-gray-400 px-2 py-1">Category</th>
+              <th class="border border-gray-400 px-2 py-1">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
       </div>
     </div>
   </main>
 
-  <!-- bootstrap -->
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- sweetalert -->
-  <script src="assets/js/sweetalert2@11.js"></script>
-
-  <!-- main  -->
-  <script src="assets/js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>
